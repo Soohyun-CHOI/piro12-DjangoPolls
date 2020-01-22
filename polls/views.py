@@ -1,6 +1,29 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from polls.models import Question
 
 
 def index(request):
-    return HttpResponse("Hello, word. You're at the polls index.")
+    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    ctx = {
+        "latest_question_list": latest_question_list
+    }
+    return render(request, "polls/index.html", ctx)
+
+
+def detail(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    ctx = {
+        "question": question
+    }
+    return render(request, "polls/detail.html", ctx)
+
+
+def results(request, question_id):
+    response = f"You're looking at the results of question {question_id}"
+    return HttpResponse(response)
+
+
+def vote(request, question_id):
+    return HttpResponse(f"You're voting on question {question_id}")
