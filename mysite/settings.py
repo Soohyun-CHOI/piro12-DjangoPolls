@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 ]
 
 SECOND_APPS = [
-    "polls",
+    "django-polls.polls",
 ]
 INSTALLED_APPS += SECOND_APPS
 

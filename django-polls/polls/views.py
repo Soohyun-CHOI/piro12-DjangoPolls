@@ -8,7 +8,7 @@ from polls.models import Question, Choice
 
 
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
+    template_name = 'polls/templates/polls/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -19,7 +19,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = 'polls/detail.html'
+    template_name = 'polls/templates/polls/detail.html'
 
     def get_queryset(self):
         return Question.objects.filter(pub_date__lte=timezone.now())
@@ -27,7 +27,7 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = 'polls/results.html'
+    template_name = 'polls/templates/polls/results.html'
 
 
 def vote(request, question_id):
@@ -39,7 +39,7 @@ def vote(request, question_id):
             'question': question,
             'error_message': "You didn't select a choice.",
         }
-        return render(request, 'polls/detail.html', ctx)
+        return render(request, 'polls/templates/polls/detail.html', ctx)
     else:
         selected_choice.votes += 1
         selected_choice.save()
